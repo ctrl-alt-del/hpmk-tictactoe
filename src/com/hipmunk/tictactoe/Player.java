@@ -19,7 +19,7 @@ public class Player {
      * logic to get the next move
      */
     public int[] nextMove() {
-        return new int[]{mRandom.nextInt(mBoardWidth), 0};
+        return new int[]{mRandom.nextInt(mBoardWidth), mRandom.nextInt(mBoardWidth)};
     }
 
     public char getMarker() {
@@ -27,7 +27,24 @@ public class Player {
     }
 
     public int[] move(Board board) {
-        return nextMove();
+
+        boolean moveSucceed = false;
+        int[] move = new int[2];
+        while (!moveSucceed) {
+
+            move = nextMove();
+            int x = move[0];
+            int y = move[1];
+
+            // check if the place is within bounds and is taken already
+            if (board.isAvailable(x, y) && !board.isTaken(x, y)) {
+                board.set(x, y, getMarker());
+                board.setTaken(x, y, true);
+                moveSucceed = true;
+            }
+        }
+        mMoveCount++;
+        return move;
     }
 
     public int getMoveCount() {
