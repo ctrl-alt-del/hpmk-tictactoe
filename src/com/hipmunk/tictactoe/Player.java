@@ -25,36 +25,26 @@ public class Player {
         * 2. check if there is a spot that blocks other from winning
         */
         if (mMoveCount >= 2) {
-            for (int i = 0; i < board.getRow(); i++) {
-                for (int j = 0; j < board.getColumn(); j++) {
-                    if (board.isAvailable(i, j) && BoardUtils.checkWinner(board, i, j, getMarker(), false)) {
-                        return new int[]{i, j};
-                    }
-                }
+            // move my winning move
+            MoveEvaluation myOptions = new MoveEvaluation(board, this);
+            if (myOptions.hasWinningMove()) {
+                return myOptions.getWinningMove();
             }
 
-            final char otherMarker = getMarker() == board.getPlayer().getMarker() ? board.getComputer().getMarker() : board.getPlayer().getMarker();
-            List<Integer[]> availablePoints = new ArrayList<>();
-            for (int i = 0; i < board.getRow(); i++) {
-                for (int j = 0; j < board.getColumn(); j++) {
-                    if (board.isAvailable(i, j)) {
-                        availablePoints.add(new Integer[]{i, j});
-                        if (BoardUtils.checkWinner(board, i, j, otherMarker, false)) {
-                            return new int[]{i, j};
-                        }
-                    }
-                }
+            // block enemy's winning move
+            final Player enemy = getMarker() == board.getPlayer().getMarker() ? board.getComputer() : board.getPlayer();
+            MoveEvaluation enemyOptions = new MoveEvaluation(board, enemy);
+            if (enemyOptions.hasWinningMove()) {
+                return enemyOptions.getWinningMove();
             }
 
-            if (availablePoints.size() > 0) {
-                Integer[] point = availablePoints.get(mRandom.nextInt(availablePoints.size()));
-                return new int[]{point[0], point[1]};
+            if (myOptions.hasAvailableMoves()) {
+                return myOptions.getRandomAvailableMove();
             }
         }
 
         int x = mRandom.nextInt(board.getRow());
         int y = mRandom.nextInt(board.getColumn());
-        // TODO: fix potential infinite loop in here
         while (!board.isAvailable(x, y)) {
             x = mRandom.nextInt(board.getRow());
             y = mRandom.nextInt(board.getColumn());
@@ -78,5 +68,43 @@ public class Player {
 
     public int getMoveCount() {
         return mMoveCount;
+    }
+
+    private class MoveEvaluation {
+        private int[] mWinningMove;
+        private boolean mHasWinningMove;
+        private List<Integer[]> mAvailableMoves;
+
+        public MoveEvaluation(Board board, Player mover) {
+            mAvailableMoves = new ArrayList<>();
+            for (int i = 0; i < board.getRow(); i++) {
+                for (int j = 0; j < board.getColumn(); j++) {
+                    if (board.isAvailable(i, j)) {
+                        mAvailableMoves.add(new Integer[]{i, j});
+                        if (BoardUtils.checkWinner(board, i, j, mover.getMarker(), false)) {
+                            mWinningMove = new int[]{i, j};
+                            mHasWinningMove = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        public boolean hasWinningMove() {
+            return mHasWinningMove;
+        }
+
+        public int[] getWinningMove() {
+            return mWinningMove;
+        }
+
+        public boolean hasAvailableMoves() {
+            return mAvailableMoves.size() > 0;
+        }
+
+        public int[] getRandomAvailableMove() {
+            Integer[] point = mAvailableMoves.get(mRandom.nextInt(mAvailableMoves.size()));
+            return new int[]{point[0], point[1]};
+        }
     }
 }
