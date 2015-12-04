@@ -44,7 +44,7 @@ public class Player {
         int x = mRandom.nextInt(board.getRow());
         int y = mRandom.nextInt(board.getColumn());
         // TODO: fix potential infinite loop in here
-        if (!board.isAvailable(x, y)) {
+        while (!board.isAvailable(x, y)) {
             x = mRandom.nextInt(board.getRow());
             y = mRandom.nextInt(board.getColumn());
         }
