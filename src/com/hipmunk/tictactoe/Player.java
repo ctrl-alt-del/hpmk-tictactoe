@@ -1,5 +1,7 @@
 package com.hipmunk.tictactoe;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Player {
@@ -32,13 +34,22 @@ public class Player {
             }
         }
 
-        final char otherMarker = getMarker() == board.getPlayer().getMarker() ? board.getComputer().getMarker() : getMarker();
+        final char otherMarker = getMarker() == board.getPlayer().getMarker() ? board.getComputer().getMarker() : board.getPlayer().getMarker();
+        List<Integer[]> availablePoints = new ArrayList<>();
         for (int i = 0; i < board.getRow(); i++) {
             for (int j = 0; j < board.getColumn(); j++) {
-                if (board.isAvailable(i, j) && BoardUtils.checkWinner(board, i, j, otherMarker, false)) {
-                    return new int[]{i, j};
+                if (board.isAvailable(i, j)) {
+                    availablePoints.add(new Integer[]{i, j});
+                    if (BoardUtils.checkWinner(board, i, j, otherMarker, false)) {
+                        return new int[]{i, j};
+                    }
                 }
             }
+        }
+
+        if (availablePoints.size() > 0) {
+            Integer[] point = availablePoints.get(mRandom.nextInt(availablePoints.size()));
+            return new int[]{point[0], point[1]};
         }
 
         int x = mRandom.nextInt(board.getRow());
