@@ -25,7 +25,7 @@ public class BoardUtils {
         boolean checkSouthEast = true;
 
         // the current (x, y) is always valid, so we just need to check the other 2 in all direction except the north
-        for (int i = 1; i < 2; i++) {
+        for (int i = 1; i < 3; i++) {
             /*
              * stop in a direction if
              * (1) we know it didn't work,
