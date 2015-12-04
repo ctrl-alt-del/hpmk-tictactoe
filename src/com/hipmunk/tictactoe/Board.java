@@ -1,37 +1,51 @@
 package com.hipmunk.tictactoe;
 
 public class Board {
-    private int mColumn;
+    private int mCol;
     private int mRow;
     private int[][] mBoard;
-    private boolean[][] mTaken;
+    private Player mPlayer;
+    private Player mComputer;
 
-    public Board(int row, int column) {
+    public Board(int row, int col, Player player, Player computer) {
         mRow = row;
-        mColumn = column;
-        mBoard = new int[mRow][mColumn];
-        mTaken = new boolean[mRow][mColumn];
+        mCol = col;
+        mPlayer = player;
+        mComputer = computer;
+        mBoard = new int[mRow][mCol];
     }
 
-    public Board set(int row, int column, int value) {
-        mBoard[row][column] = value;
+    public int getRow() {
+        return mRow;
+    }
+
+    public int getColumn() {
+        return mCol;
+    }
+
+    public Player getPlayer() {
+        return mPlayer;
+    }
+
+    public Player getComputer() {
+        return mComputer;
+    }
+
+    public Board set(int row, int col, int value) {
+        mBoard[row][col] = value;
         return this;
     }
 
-    public int get(int row, int column) {
-        return mBoard[row][column];
+    public int get(int row, int col) {
+        return mBoard[row][col];
     }
 
-    public void setTaken(int row, int column, boolean taken) {
-        mTaken[row][column] = taken;
+    public boolean isTaken(int row, int col) {
+        return mBoard[row][col] != 0;
     }
 
-    public boolean isTaken(int row, int column) {
-        return mTaken[row][column];
-    }
-
-    public boolean isWithinBound(int row, int column) {
-        return row >= 0 && row < mRow && column >= 0 && column < mColumn;
+    public boolean isWithinBound(int row, int col) {
+        return row >= 0 && row < mRow && col >= 0 && col < mCol;
     }
 
     public boolean isAvailable(int x, int y) {
@@ -42,7 +56,7 @@ public class Board {
         StringBuilder sb = new StringBuilder();
         for (int[] row : mBoard) {
             for (int item : row) {
-                sb.append(item + " ");
+                sb.append(item == 0 ? "* " : (char) item + " ");
             }
             sb.append("\n");
         }

@@ -6,7 +6,6 @@ public class Player {
     private Random mRandom;
     private char mMarker;
     private int mMoveCount;
-    private int mBoardWidth;
 
     public Player(char marker) {
         mRandom = new Random();
@@ -18,8 +17,38 @@ public class Player {
     /**
      * logic to get the next move
      */
-    public int[] nextMove() {
-        return new int[]{mRandom.nextInt(mBoardWidth), mRandom.nextInt(mBoardWidth)};
+    public int[] nextMove(Board board) {
+
+        /*
+        * 1. check if there is a spot that makes me win
+        * 2. check if there is a spot that blocks other from winning
+        */
+
+        for (int i = 0; i < board.getRow(); i++) {
+            for (int j = 0; j < board.getColumn(); j++) {
+                if (board.isAvailable(i, j) && BoardUtils.checkWinner(board, i, j, getMarker(), false)) {
+                    return new int[]{i, j};
+                }
+            }
+        }
+
+        final char otherMarker = getMarker() == board.getPlayer().getMarker() ? board.getComputer().getMarker() : getMarker();
+        for (int i = 0; i < board.getRow(); i++) {
+            for (int j = 0; j < board.getColumn(); j++) {
+                if (board.isAvailable(i, j) && BoardUtils.checkWinner(board, i, j, otherMarker, false)) {
+                    return new int[]{i, j};
+                }
+            }
+        }
+
+        int x = mRandom.nextInt(board.getRow());
+        int y = mRandom.nextInt(board.getColumn());
+        // TODO: fix potential infinite loop in here
+        if (!board.isAvailable(x, y)) {
+            x = mRandom.nextInt(board.getRow());
+            y = mRandom.nextInt(board.getColumn());
+        }
+        return new int[]{x, y};
     }
 
     public char getMarker() {
@@ -28,21 +57,10 @@ public class Player {
 
     public int[] move(Board board) {
 
-        boolean moveSucceed = false;
-        int[] move = new int[2];
-        while (!moveSucceed) {
-
-            move = nextMove();
-            int x = move[0];
-            int y = move[1];
-
-            // check if the place is within bounds and is taken already
-            if (board.isAvailable(x, y) && !board.isTaken(x, y)) {
-                board.set(x, y, getMarker());
-                board.setTaken(x, y, true);
-                moveSucceed = true;
-            }
-        }
+        int[] move = nextMove(board);
+        int x = move[0];
+        int y = move[1];
+        board.set(x, y, getMarker());
         mMoveCount++;
         return move;
     }
