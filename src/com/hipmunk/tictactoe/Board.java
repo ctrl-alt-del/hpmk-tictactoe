@@ -48,4 +48,14 @@ public class Board {
         }
         System.out.println(sb.toString());
     }
+
+    public boolean hasWinner(Player player, int[] move) {
+        int x = move[0];
+        int y = move[1];
+        boolean hasWinner = BoardUtils.checkWinner(this, x, y);
+        if (hasWinner) {
+            BoardUtils.announceWinner(player);
+        }
+        return hasWinner;
+    }
 }
