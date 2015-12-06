@@ -34,10 +34,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        List<String> list = new ArrayList<>(9);
-        for (int i = 0; i < 9; i++) {
-            list.add(String.valueOf(i));
-        }
+        Board board = getGame();
+
+        List<String> list = board.toList();
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
         GridView gridview = (GridView) findViewById(R.id.gridview);
         gridview.setAdapter(adapter);
@@ -70,5 +69,50 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public Board getGame() {
+
+        int row = 3;
+        int col = 3;
+        Player player = new Player('O');
+        Player computer = new Player('X');
+        Board board = new Board(row, col, player, computer);
+
+        // turn on/off board history
+        boolean showHistory = true;
+        int trial = 0;
+        Player mover;
+        int[] move;
+        boolean gameCompleted = false;
+        int maxNumberOfMoves = row * col;
+        while (trial < maxNumberOfMoves && !gameCompleted) {
+
+            // simulated player move;
+            mover = trial % 2 == 0 ? player : computer;
+            move = mover.move(board);
+
+            if (showHistory) {
+                board.print();
+            }
+
+            // no need check winner for the first 4 moves
+            if (trial >= 4) {
+                gameCompleted = board.hasWinner(mover, move);
+            }
+
+            if (!gameCompleted) {
+                trial++;
+                if (trial == maxNumberOfMoves) {
+                    System.out.println("No winner");
+                }
+            } else {
+                if (!showHistory) {
+                    // print the final result if board history is not enabled
+                    board.print();
+                }
+            }
+        }
+        return board;
     }
 }
