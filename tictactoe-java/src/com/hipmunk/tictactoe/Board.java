@@ -63,6 +63,16 @@ public class Board {
         System.out.println(sb.toString());
     }
 
+    public List<String> toList() {
+        List<String> list = new ArrayList<>(9);
+        for (int[] row : mBoard) {
+            for (int item : row) {
+                list.add(item == 0 ? "*" : String.valueOf((char) item));
+            }
+        }
+        return list;
+    }
+
     public boolean hasWinner(Player player, int[] move) {
         int x = move[0];
         int y = move[1];
