@@ -18,6 +18,11 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private Board mBoard;
+    private ArrayAdapter<String> mAdapter;
+    private List<String> mBoardRecord;
+    private GridView mGridview;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,14 +39,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Board board = getGame();
+        mBoardRecord = new ArrayList<>();
 
-        List<String> list = board.toList();
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
-        GridView gridview = (GridView) findViewById(R.id.gridview);
-        gridview.setAdapter(adapter);
+        mBoard = getGame();
+        mBoardRecord.addAll(mBoard.toList());
 
-        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, mBoardRecord);
+        mGridview = (GridView) findViewById(R.id.gridview);
+        mGridview.setAdapter(mAdapter);
+
+        mGridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
                 Toast.makeText(MainActivity.this, "" + position, Toast.LENGTH_SHORT).show();
@@ -63,12 +70,16 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case R.id.action_restart:
+                mBoard = getGame();
+                mBoardRecord.clear();
+                mBoardRecord.addAll(mBoard.toList());
+                mAdapter.notifyDataSetChanged();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
 
     public Board getGame() {

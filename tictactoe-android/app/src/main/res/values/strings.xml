@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">Tictactoe</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_restart">Restart Game</string>
 </resources>
