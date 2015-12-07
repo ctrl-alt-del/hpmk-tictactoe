@@ -1,5 +1,9 @@
 package com.hipmunk.android.tictactoe;
 
+import com.hipmunk.android.tictactoe.models.impl.ComputerPlayer;
+import com.hipmunk.android.tictactoe.models.impl.HumanPlayer;
+import com.hipmunk.android.tictactoe.models.impl.Player;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,14 +11,14 @@ public class Board {
     private int mCol;
     private int mRow;
     private int[][] mBoard;
-    private Player mPlayer;
-    private ComputerPlayer mComputer;
+    private HumanPlayer mHumanPlayer;
+    private ComputerPlayer mComputerPlayer;
 
-    public Board(int row, int col, Player player, ComputerPlayer computer) {
+    public Board(int row, int col, HumanPlayer humanPlayer, ComputerPlayer computerPlayer) {
         mRow = row;
         mCol = col;
-        mPlayer = player;
-        mComputer = computer;
+        mHumanPlayer = humanPlayer;
+        mComputerPlayer = computerPlayer;
         mBoard = new int[mRow][mCol];
     }
 
@@ -26,12 +30,12 @@ public class Board {
         return mCol;
     }
 
-    public Player getPlayer() {
-        return mPlayer;
+    public HumanPlayer getHumanPlayer() {
+        return mHumanPlayer;
     }
 
-    public ComputerPlayer getComputer() {
-        return mComputer;
+    public ComputerPlayer getComputerPlayer() {
+        return mComputerPlayer;
     }
 
     public Board set(int row, int col, int value) {

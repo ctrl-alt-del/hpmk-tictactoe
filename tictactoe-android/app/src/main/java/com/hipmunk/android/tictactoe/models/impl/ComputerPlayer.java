@@ -1,12 +1,13 @@
-package com.hipmunk.android.tictactoe;
+package com.hipmunk.android.tictactoe.models.impl;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.hipmunk.android.tictactoe.Board;
+import com.hipmunk.android.tictactoe.ComputerMoveEvaluation;
+import com.hipmunk.android.tictactoe.models.IEvaluateTicTacToe;
+
 import java.util.Random;
 
-public class ComputerPlayer extends Player {
+public class ComputerPlayer extends TicTacToePlayer implements IEvaluateTicTacToe {
     private Random mRandom;
-    private int mMoveCount;
 
     public ComputerPlayer(char marker) {
         super(marker);
@@ -16,22 +17,23 @@ public class ComputerPlayer extends Player {
     /**
      * logic to get the next move
      */
-    public int[] nextMove(Board board) {
+    @Override
+    public int[] evaluateNextMove(Board board) {
 
         /*
         * 1. check if there is a spot that makes me win
         * 2. check if there is a spot that blocks other from winning
         */
-        if (mMoveCount >= 2) {
+        if (getMoveCount() >= 2) {
             // move my winning move
-            MoveEvaluation myOptions = new MoveEvaluation(board, this);
+            ComputerMoveEvaluation myOptions = new ComputerMoveEvaluation(board, this, mRandom);
             if (myOptions.hasWinningMove()) {
                 return myOptions.getWinningMove();
             }
 
             // block enemy's winning move
-            final ComputerPlayer computer = board.getComputer();
-            MoveEvaluation enemyOptions = new MoveEvaluation(board, computer);
+            final HumanPlayer humanPlayer = board.getHumanPlayer();
+            ComputerMoveEvaluation enemyOptions = new ComputerMoveEvaluation(board, humanPlayer, mRandom);
             if (enemyOptions.hasWinningMove()) {
                 return enemyOptions.getWinningMove();
             }
@@ -48,15 +50,5 @@ public class ComputerPlayer extends Player {
             y = mRandom.nextInt(board.getColumn());
         }
         return new int[]{x, y};
-    }
-
-    public int[] move(Board board) {
-
-        int[] move = nextMove(board);
-        int x = move[0];
-        int y = move[1];
-        board.set(x, y, getMarker());
-        mMoveCount++;
-        return move;
     }
 }

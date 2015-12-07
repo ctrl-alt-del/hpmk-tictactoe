@@ -1,5 +1,7 @@
 package com.hipmunk.android.tictactoe;
 
+import com.hipmunk.android.tictactoe.models.impl.Player;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
