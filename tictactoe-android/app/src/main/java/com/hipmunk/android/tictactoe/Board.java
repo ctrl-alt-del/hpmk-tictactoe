@@ -8,9 +8,9 @@ public class Board {
     private int mRow;
     private int[][] mBoard;
     private Player mPlayer;
-    private Player mComputer;
+    private ComputerPlayer mComputer;
 
-    public Board(int row, int col, Player player, Player computer) {
+    public Board(int row, int col, Player player, ComputerPlayer computer) {
         mRow = row;
         mCol = col;
         mPlayer = player;
@@ -30,7 +30,7 @@ public class Board {
         return mPlayer;
     }
 
-    public Player getComputer() {
+    public ComputerPlayer getComputer() {
         return mComputer;
     }
 
