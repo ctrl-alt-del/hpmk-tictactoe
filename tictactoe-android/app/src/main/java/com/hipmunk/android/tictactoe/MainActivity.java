@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         mBoard = getGame();
         mBoardRecord.addAll(mBoard.toList());
 
-        mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, mBoardRecord);
+        mAdapter = new ArrayAdapter<>(this, R.layout.board_item, mBoardRecord);
         mGridview = (GridView) findViewById(R.id.gridview);
         mGridview.setAdapter(mAdapter);
 
