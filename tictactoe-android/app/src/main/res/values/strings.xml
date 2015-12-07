@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">Tictactoe</string>
     <string name="action_restart">Restart Game</string>
+    <string name="winning_message">Congratulation! You won the game.</string>
+    <string name="defeated_message">Sorry, you lost the game. Try it again?</string>
 </resources>

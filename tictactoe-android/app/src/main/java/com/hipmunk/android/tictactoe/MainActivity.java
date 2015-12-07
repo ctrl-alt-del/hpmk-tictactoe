@@ -13,6 +13,10 @@ import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import com.hipmunk.android.tictactoe.models.impl.ComputerPlayer;
+import com.hipmunk.android.tictactoe.models.impl.HumanPlayer;
+import com.hipmunk.android.tictactoe.models.impl.Player;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayAdapter<String> mAdapter;
     private List<String> mBoardRecord;
     private GridView mGridview;
-    private Player mPlayer;
+    private HumanPlayer mHumanPlayer;
     private ComputerPlayer mComputer;
 
     @Override
@@ -41,14 +45,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mBoardRecord = new ArrayList<>();
-
         initializeGame();
         mBoardRecord.addAll(mBoard.toList());
-
-        mAdapter = new ArrayAdapter<>(this, R.layout.board_item, mBoardRecord);
-        mGridview = (GridView) findViewById(R.id.gridview);
-        mGridview.setAdapter(mAdapter);
 
         mGridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
@@ -56,11 +54,10 @@ public class MainActivity extends AppCompatActivity {
                 int y = position % 3;
                 int x = (position - y) / 3;
                 // TODO: move to presenter, then attach the computer move
-                mPlayer.move(mBoard, x, y);
+                int[] move = mHumanPlayer.move(mBoard, x, y);
+                onPlayerMoveSucceed(move);
                 // TODO: evaluate winner after move
-                mBoardRecord.clear();
-                mBoardRecord.addAll(mBoard.toList());
-                mAdapter.notifyDataSetChanged();
+
                 Toast.makeText(MainActivity.this, "" + position, Toast.LENGTH_SHORT).show();
             }
         });
@@ -83,113 +80,58 @@ public class MainActivity extends AppCompatActivity {
         switch (id) {
             case R.id.action_restart:
                 initializeGame();
-                mBoardRecord.clear();
-                mBoardRecord.addAll(mBoard.toList());
-                mAdapter.notifyDataSetChanged();
+                updateGridView();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    public void onPlayerMoveSucceed() {
-
+    // TODO: put this method to interface
+    public void onPlayerMoveSucceed(int[] move) {
+        updateGridView();
+        if (BoardUtils.checkWinner(mBoard, move)) {
+            Snackbar.make(findViewById(android.R.id.content), getString(R.string.winning_message), Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+            mGridview.setEnabled(false);
+        } else {
+            performComputerMove();
+        }
     }
 
-    public void onComputerMoveSucceed() {
+    // TODO: move this method to presenter
+    public void performComputerMove() {
+        int[] nextComputerMove = mComputer.evaluateNextMove(mBoard);
+        mComputer.move(mBoard, nextComputerMove);
+        onComputerMoveSucceed(nextComputerMove);
+    }
 
+    // TODO: put this method to interface
+    public void onComputerMoveSucceed(int[] move) {
+        updateGridView();
+        if (BoardUtils.checkWinner(mBoard, move)) {
+            Snackbar.make(findViewById(android.R.id.content), getString(R.string.defeated_message), Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+            mGridview.setEnabled(false);
+        }
+    }
+
+    public void updateGridView() {
+        mBoardRecord.clear();
+        mBoardRecord.addAll(mBoard.toList());
+        mAdapter.notifyDataSetChanged();
     }
 
     public void initializeGame() {
-
         int row = 3;
         int col = 3;
-        mPlayer = new Player('O');
+        mHumanPlayer = new HumanPlayer('O');
         mComputer = new ComputerPlayer('X');
-        mBoard = new Board(row, col, mPlayer, mComputer);
-
-        // turn on/off board history
-        boolean showHistory = true;
-        int trial = 0;
-        Player mover;
-        int[] move;
-        boolean gameCompleted = false;
-        int maxNumberOfMoves = row * col;
-//        while (trial < maxNumberOfMoves && !gameCompleted) {
-//
-//            // simulated player move;
-//            mover = trial % 2 == 0 ? mPlayer : mComputer;
-//            move = mover.move(board);
-//
-//            if (showHistory) {
-//                board.print();
-//            }
-//
-//            // no need check winner for the first 4 moves
-//            if (trial >= 4) {
-//                gameCompleted = board.hasWinner(mover, move);
-//            }
-//
-//            if (!gameCompleted) {
-//                trial++;
-//                if (trial == maxNumberOfMoves) {
-//                    System.out.println("No winner");
-//                }
-//            } else {
-//                if (!showHistory) {
-//                    // print the final result if board history is not enabled
-//                    board.print();
-//                }
-//            }
-//        }
-//        return board;
+        mBoard = new Board(row, col, mHumanPlayer, mComputer);
+        mBoardRecord = new ArrayList<>();
+        mAdapter = new ArrayAdapter<>(this, R.layout.board_item, mBoardRecord);
+        mGridview = (GridView) findViewById(R.id.gridview);
+        mGridview.setAdapter(mAdapter);
+        mGridview.setEnabled(true);
     }
-
-
-
-
-//    public Board getGame() {
-//
-//        int row = 3;
-//        int col = 3;
-//        Player player = new Player('O');
-//        Player computer = new Player('X');
-//        Board board = new Board(row, col, player, computer);
-//
-//        // turn on/off board history
-//        boolean showHistory = true;
-//        int trial = 0;
-//        Player mover;
-//        int[] move;
-//        boolean gameCompleted = false;
-//        int maxNumberOfMoves = row * col;
-//        while (trial < maxNumberOfMoves && !gameCompleted) {
-//
-//            // simulated player move;
-//            mover = trial % 2 == 0 ? player : computer;
-//            move = mover.move(board);
-//
-//            if (showHistory) {
-//                board.print();
-//            }
-//
-//            // no need check winner for the first 4 moves
-//            if (trial >= 4) {
-//                gameCompleted = board.hasWinner(mover, move);
-//            }
-//
-//            if (!gameCompleted) {
-//                trial++;
-//                if (trial == maxNumberOfMoves) {
-//                    System.out.println("No winner");
-//                }
-//            } else {
-//                if (!showHistory) {
-//                    // print the final result if board history is not enabled
-//                    board.print();
-//                }
-//            }
-//        }
-//        return board;
-//    }
 }

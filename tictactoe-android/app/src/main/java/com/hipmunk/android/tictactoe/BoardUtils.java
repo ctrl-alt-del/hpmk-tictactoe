@@ -1,9 +1,17 @@
 package com.hipmunk.android.tictactoe;
 
+import com.hipmunk.android.tictactoe.models.impl.Player;
+
 /**
  * Method to check the winner
  */
 public class BoardUtils {
+
+    public static boolean checkWinner(Board board, int[] move) {
+        int x = move[0];
+        int y = move[1];
+        return checkWinner(board, x, y, board.get(x, y), true);
+    }
 
     public static boolean checkWinner(Board board, int x, int y) {
         return checkWinner(board, x, y, board.get(x, y), true);
