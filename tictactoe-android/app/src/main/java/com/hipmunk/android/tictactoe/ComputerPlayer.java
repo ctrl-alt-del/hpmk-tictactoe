@@ -6,11 +6,11 @@ import java.util.Random;
 
 public class ComputerPlayer extends Player {
     private Random mRandom;
-    private char mMarker;
     private int mMoveCount;
 
     public ComputerPlayer(char marker) {
         super(marker);
+        mRandom = new Random();
     }
 
     /**
@@ -48,10 +48,6 @@ public class ComputerPlayer extends Player {
             y = mRandom.nextInt(board.getColumn());
         }
         return new int[]{x, y};
-    }
-
-    public char getMarker() {
-        return mMarker;
     }
 
     public int[] move(Board board) {
