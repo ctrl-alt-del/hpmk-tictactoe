@@ -98,4 +98,12 @@ public class Board {
         }
         return true;
     }
+
+    public void reset() {
+        for (int i = 0; i < getRow(); i++) {
+            for (int j = 0; j < getColumn(); j++) {
+                set(i, j, 0);
+            }
+        }
+    }
 }

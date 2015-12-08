@@ -49,6 +49,10 @@ public class MainActivity extends BaseActivity implements IMainView {
             }
         });
 
+        mBoardRecord = new ArrayList<>();
+        mAdapter = new ArrayAdapter<>(this, R.layout.board_item, mBoardRecord);
+        mGridView = (GridView) findViewById(R.id.gridview);
+
         initializeGame();
         mBoardRecord.addAll(mBoard.toList());
 
@@ -78,7 +82,7 @@ public class MainActivity extends BaseActivity implements IMainView {
 
         switch (id) {
             case R.id.action_restart:
-                initializeGame();
+                resetGame();
                 updateGridView();
                 return true;
             default:
@@ -132,15 +136,19 @@ public class MainActivity extends BaseActivity implements IMainView {
     }
 
     public void initializeGame() {
-        int row = 3;
-        int col = 3;
         mHumanPlayer = new HumanPlayer('O');
         mComputerPlayer = new ComputerPlayer('X');
+
+        int row = 3;
+        int col = 3;
         mBoard = new Board(row, col, mHumanPlayer, mComputerPlayer);
-        mBoardRecord = new ArrayList<>();
-        mAdapter = new ArrayAdapter<>(this, R.layout.board_item, mBoardRecord);
-        mGridView = (GridView) findViewById(R.id.gridview);
+
         mGridView.setAdapter(mAdapter);
+        mGridView.setEnabled(true);
+    }
+
+    public void resetGame() {
+        mBoard.reset();
         mGridView.setEnabled(true);
     }
 }
