@@ -94,12 +94,12 @@ public class MainActivity extends BaseActivity implements IMainView {
     public void onPlayerMoveSucceed(int[] move) {
         updateGridView();
         int[] nextComputerMove = mComputerPlayer.evaluateNextMove(mBoard);
-        mPresenter.performComputerMove(mBoard, nextComputerMove[0], nextComputerMove[1]);
+        mPresenter.performComputerMove(mBoard, nextComputerMove);
     }
 
     @Override
     public void onPlayerMoveFailed(String errorMessage) {
-
+        // TODO: add dialog to show error message
     }
 
     @Override
@@ -109,7 +109,7 @@ public class MainActivity extends BaseActivity implements IMainView {
 
     @Override
     public void onComputerMoveFailed(String errorMessage) {
-
+        // TODO: add dialog to show error message
     }
 
     @Override

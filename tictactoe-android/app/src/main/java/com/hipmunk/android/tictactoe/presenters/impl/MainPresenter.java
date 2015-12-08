@@ -1,5 +1,7 @@
 package com.hipmunk.android.tictactoe.presenters.impl;
 
+import android.support.annotation.NonNull;
+
 import com.hipmunk.android.tictactoe.Board;
 import com.hipmunk.android.tictactoe.BoardUtils;
 import com.hipmunk.android.tictactoe.models.impl.ComputerPlayer;
@@ -15,7 +17,7 @@ public class MainPresenter extends BasePresenter<IMainView> implements IMainPres
     }
 
     @Override
-    public void performHumanMove(Board board, int x, int y) {
+    public void performHumanMove(@NonNull Board board, int x, int y) {
         HumanPlayer humanPlayer = board.getHumanPlayer();
         int[] move = humanPlayer.move(board, x, y);
         boolean hasWinner = BoardUtils.checkWinner(board, move);
@@ -30,7 +32,7 @@ public class MainPresenter extends BasePresenter<IMainView> implements IMainPres
     }
 
     @Override
-    public void performComputerMove(Board board, int x, int y) {
+    public void performComputerMove(@NonNull Board board, int x, int y) {
         ComputerPlayer computerPlayer = board.getComputerPlayer();
         int[] move = computerPlayer.evaluateNextMove(board);
         computerPlayer.move(board, move);
@@ -43,5 +45,15 @@ public class MainPresenter extends BasePresenter<IMainView> implements IMainPres
         } else {
             getView().onComputerMoveSucceed(move);
         }
+    }
+
+    @Override
+    public void performComputerMove(@NonNull Board board, int[] move) {
+        if (move.length != 2) {
+            //TODO: add error message
+            getView().onComputerMoveFailed("");
+        }
+
+        performHumanMove(board, move[0], move[1]);
     }
 }
