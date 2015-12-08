@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
-import android.widget.Toast;
 
 import com.hipmunk.android.tictactoe.models.impl.ComputerPlayer;
 import com.hipmunk.android.tictactoe.models.impl.HumanPlayer;
@@ -30,7 +29,7 @@ public class MainActivity extends BaseActivity implements IMainView {
     private List<String> mBoardRecord;
     private GridView mGridView;
     private HumanPlayer mHumanPlayer;
-    private ComputerPlayer mComputer;
+    private ComputerPlayer mComputerPlayer;
     private IMainPresenter mPresenter;
 
     @Override
@@ -90,7 +89,7 @@ public class MainActivity extends BaseActivity implements IMainView {
     @Override
     public void onPlayerMoveSucceed(int[] move) {
         updateGridView();
-        int[] nextComputerMove = mComputer.evaluateNextMove(mBoard);
+        int[] nextComputerMove = mComputerPlayer.evaluateNextMove(mBoard);
         mPresenter.performComputerMove(mBoard, nextComputerMove[0], nextComputerMove[1]);
     }
 
@@ -110,14 +109,16 @@ public class MainActivity extends BaseActivity implements IMainView {
     }
 
     @Override
-    public void onGameOver(boolean hasWinner, Player player) {
-        String message;
-        if (hasWinner) {
-            message = (player instanceof HumanPlayer) ? getString(R.string.winning_message) : getString(R.string.defeated_message);
-        } else {
-            message = getString(R.string.tie_message);
-        }
+    public void onGameOverWithWinner(Player player) {
+        String message = (player instanceof HumanPlayer) ? getString(R.string.winning_message) : getString(R.string.defeated_message);
         Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
+        mGridView.setEnabled(false);
+    }
+
+    @Override
+    public void onGameOverWithoutWinner() {
+        Snackbar.make(findViewById(android.R.id.content), getString(R.string.tie_message), Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
         mGridView.setEnabled(false);
     }
@@ -132,8 +133,8 @@ public class MainActivity extends BaseActivity implements IMainView {
         int row = 3;
         int col = 3;
         mHumanPlayer = new HumanPlayer('O');
-        mComputer = new ComputerPlayer('X');
-        mBoard = new Board(row, col, mHumanPlayer, mComputer);
+        mComputerPlayer = new ComputerPlayer('X');
+        mBoard = new Board(row, col, mHumanPlayer, mComputerPlayer);
         mBoardRecord = new ArrayList<>();
         mAdapter = new ArrayAdapter<>(this, R.layout.board_item, mBoardRecord);
         mGridView = (GridView) findViewById(R.id.gridview);

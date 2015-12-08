@@ -7,5 +7,6 @@ public interface IMainView extends IBaseView {
     void onPlayerMoveFailed(String errorMessage);
     void onComputerMoveSucceed(int[] move);
     void onComputerMoveFailed(String errorMessage);
-    void onGameOver(boolean hasWinner, Player player);
+    void onGameOverWithWinner(Player player);
+    void onGameOverWithoutWinner();
 }

@@ -89,4 +89,13 @@ public class Board {
         }
         return hasWinner;
     }
+
+    public boolean isGameEnd() {
+        for (int[] row : mBoard) {
+            for (int item : row) {
+                if (item == 0) return false;
+            }
+        }
+        return true;
+    }
 }

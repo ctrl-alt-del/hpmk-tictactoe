@@ -21,7 +21,9 @@ public class MainPresenter extends BasePresenter<IMainView> implements IMainPres
         boolean hasWinner = BoardUtils.checkWinner(board, move);
 
         if (hasWinner) {
-            getView().onGameOver(hasWinner, humanPlayer);
+            getView().onGameOverWithWinner(hasWinner, humanPlayer);
+        } else if (board.isGameEnd()) {
+            getView().onGameOverWithoutWinner();
         } else {
             getView().onPlayerMoveSucceed(move);
         }
@@ -35,7 +37,9 @@ public class MainPresenter extends BasePresenter<IMainView> implements IMainPres
 
         boolean hasWinner = BoardUtils.checkWinner(board, move);
         if (hasWinner) {
-            getView().onGameOver(hasWinner, computerPlayer);
+            getView().onGameOverWithWinner(hasWinner, computerPlayer);
+        } else if (board.isGameEnd()) {
+            getView().onGameOverWithoutWinner();
         } else {
             getView().onComputerMoveSucceed(move);
         }
