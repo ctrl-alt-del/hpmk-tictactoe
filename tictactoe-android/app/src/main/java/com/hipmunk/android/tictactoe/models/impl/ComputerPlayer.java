@@ -24,7 +24,7 @@ public class ComputerPlayer extends TicTacToePlayer implements IEvaluateTicTacTo
         * 1. check if there is a spot that makes me win
         * 2. check if there is a spot that blocks other from winning
         */
-        if (getMoveCount() >= 2) {
+        if (getMoveCount() >= 1) {
             // move my winning move
             ComputerMoveEvaluation myOptions = new ComputerMoveEvaluation(board, this, mRandom);
             if (myOptions.hasWinningMove()) {
