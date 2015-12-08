@@ -110,6 +110,7 @@ public class MainActivity extends BaseActivity implements IMainView {
 
     @Override
     public void onGameOverWithWinner(Player player) {
+        updateGridView();
         String message = (player instanceof HumanPlayer) ? getString(R.string.winning_message) : getString(R.string.defeated_message);
         Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
@@ -118,6 +119,7 @@ public class MainActivity extends BaseActivity implements IMainView {
 
     @Override
     public void onGameOverWithoutWinner() {
+        updateGridView();
         Snackbar.make(findViewById(android.R.id.content), getString(R.string.tie_message), Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
         mGridView.setEnabled(false);
