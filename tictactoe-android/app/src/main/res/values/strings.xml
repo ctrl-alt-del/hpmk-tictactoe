@@ -3,4 +3,5 @@
     <string name="action_restart">Restart Game</string>
     <string name="winning_message">Congratulation! You won the game.</string>
     <string name="defeated_message">Sorry, you lost the game. Try it again?</string>
+    <string name="tie_message">No winner. Try it again?</string>
 </resources>

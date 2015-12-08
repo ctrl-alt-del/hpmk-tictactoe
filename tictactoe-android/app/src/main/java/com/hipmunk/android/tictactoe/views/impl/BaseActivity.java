@@ -1,4 +1,4 @@
-package com.hipmunk.android.tictactoe;
+package com.hipmunk.android.tictactoe.views.impl;
 
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
