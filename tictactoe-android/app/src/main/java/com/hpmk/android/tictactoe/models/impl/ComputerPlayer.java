@@ -1,7 +1,6 @@
 package com.hpmk.android.tictactoe.models.impl;
 
 import com.hpmk.android.tictactoe.ComputerMoveEvaluation;
-import com.hpmk.android.tictactoe.TicTacToeBoard;
 import com.hpmk.android.tictactoe.models.IEvaluateTicTacToe;
 
 import java.util.Random;

@@ -1,4 +1,4 @@
-package com.hpmk.android.tictactoe;
+package com.hpmk.android.tictactoe.models;
 
 public abstract class Board {
     private int mCol;

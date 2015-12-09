@@ -1,5 +1,6 @@
-package com.hpmk.android.tictactoe;
+package com.hpmk.android.tictactoe.utils;
 
+import com.hpmk.android.tictactoe.models.Board;
 import com.hpmk.android.tictactoe.models.impl.Player;
 
 /**

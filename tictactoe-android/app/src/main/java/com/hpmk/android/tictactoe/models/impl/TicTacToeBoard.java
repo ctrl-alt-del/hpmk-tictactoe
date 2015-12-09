@@ -1,5 +1,6 @@
-package com.hpmk.android.tictactoe;
+package com.hpmk.android.tictactoe.models.impl;
 
+import com.hpmk.android.tictactoe.models.Board;
 import com.hpmk.android.tictactoe.models.impl.ComputerPlayer;
 import com.hpmk.android.tictactoe.models.impl.HumanPlayer;
 

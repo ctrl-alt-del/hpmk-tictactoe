@@ -12,6 +12,7 @@ import android.widget.GridView;
 import com.hpmk.android.tictactoe.models.impl.ComputerPlayer;
 import com.hpmk.android.tictactoe.models.impl.HumanPlayer;
 import com.hpmk.android.tictactoe.models.impl.Player;
+import com.hpmk.android.tictactoe.models.impl.TicTacToeBoard;
 import com.hpmk.android.tictactoe.presenters.IMainPresenter;
 import com.hpmk.android.tictactoe.presenters.impl.MainPresenter;
 import com.hpmk.android.tictactoe.utils.MessageUtils;

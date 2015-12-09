@@ -1,6 +1,8 @@
 package com.hpmk.android.tictactoe;
 
 import com.hpmk.android.tictactoe.models.impl.Player;
+import com.hpmk.android.tictactoe.models.impl.TicTacToeBoard;
+import com.hpmk.android.tictactoe.utils.BoardUtils;
 
 import java.util.ArrayList;
 import java.util.List;

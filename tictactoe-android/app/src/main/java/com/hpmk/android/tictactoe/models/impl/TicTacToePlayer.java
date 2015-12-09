@@ -1,6 +1,5 @@
 package com.hpmk.android.tictactoe.models.impl;
 
-import com.hpmk.android.tictactoe.TicTacToeBoard;
 import com.hpmk.android.tictactoe.models.IPlayTicTacToe;
 
 public class TicTacToePlayer extends Player implements IPlayTicTacToe {

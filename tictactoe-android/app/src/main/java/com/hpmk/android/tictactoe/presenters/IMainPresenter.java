@@ -1,6 +1,6 @@
 package com.hpmk.android.tictactoe.presenters;
 
-import com.hpmk.android.tictactoe.TicTacToeBoard;
+import com.hpmk.android.tictactoe.models.impl.TicTacToeBoard;
 import com.hpmk.android.tictactoe.views.IMainView;
 
 public interface IMainPresenter extends IBasePresenter<IMainView> {
