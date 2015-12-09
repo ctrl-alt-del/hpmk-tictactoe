@@ -2,7 +2,7 @@ package com.hipmunk.android.tictactoe.presenters.impl;
 
 import android.support.annotation.NonNull;
 
-import com.hipmunk.android.tictactoe.Board;
+import com.hipmunk.android.tictactoe.TicTacToeBoard;
 import com.hipmunk.android.tictactoe.BoardUtils;
 import com.hipmunk.android.tictactoe.models.impl.ComputerPlayer;
 import com.hipmunk.android.tictactoe.models.impl.HumanPlayer;
@@ -17,14 +17,14 @@ public class MainPresenter extends BasePresenter<IMainView> implements IMainPres
     }
 
     @Override
-    public void performHumanMove(@NonNull Board board, int x, int y) {
+    public void performHumanMove(@NonNull TicTacToeBoard board, int x, int y) {
         HumanPlayer humanPlayer = board.getHumanPlayer();
         int[] move = humanPlayer.move(board, x, y);
         boolean hasWinner = BoardUtils.checkWinner(board, move);
 
         if (hasWinner) {
             getView().onGameOverWithWinner(humanPlayer);
-        } else if (board.isGameEnd()) {
+        } else if (BoardUtils.isGameCompleted(board)) {
             getView().onGameOverWithoutWinner();
         } else {
             getView().onPlayerMoveSucceed(move);
@@ -32,7 +32,7 @@ public class MainPresenter extends BasePresenter<IMainView> implements IMainPres
     }
 
     @Override
-    public void performComputerMove(@NonNull Board board, int x, int y) {
+    public void performComputerMove(@NonNull TicTacToeBoard board, int x, int y) {
         ComputerPlayer computerPlayer = board.getComputerPlayer();
         int[] move = computerPlayer.evaluateNextMove(board);
         computerPlayer.move(board, move);
@@ -40,7 +40,7 @@ public class MainPresenter extends BasePresenter<IMainView> implements IMainPres
         boolean hasWinner = BoardUtils.checkWinner(board, move);
         if (hasWinner) {
             getView().onGameOverWithWinner(computerPlayer);
-        } else if (board.isGameEnd()) {
+        } else if (BoardUtils.isGameCompleted(board)) {
             getView().onGameOverWithoutWinner();
         } else {
             getView().onComputerMoveSucceed(move);
@@ -48,7 +48,7 @@ public class MainPresenter extends BasePresenter<IMainView> implements IMainPres
     }
 
     @Override
-    public void performComputerMove(@NonNull Board board, int[] move) {
+    public void performComputerMove(@NonNull TicTacToeBoard board, int[] move) {
         if (move.length != 2) {
             //TODO: add error message
             getView().onComputerMoveFailed("");

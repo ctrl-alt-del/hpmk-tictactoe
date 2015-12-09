@@ -7,6 +7,15 @@ import com.hipmunk.android.tictactoe.models.impl.Player;
  */
 public class BoardUtils {
 
+    public static boolean isGameCompleted(Board board) {
+        for (int i = 0; i < board.getRow(); i++) {
+            for (int j = 0; j < board.getColumn(); j++) {
+                if (board.get(i, j) == 0) return false;
+            }
+        }
+        return true;
+    }
+
     public static boolean checkWinner(Board board, int[] move) {
         int x = move[0];
         int y = move[1];
