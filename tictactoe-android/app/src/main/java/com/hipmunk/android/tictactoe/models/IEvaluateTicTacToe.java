@@ -1,7 +1,7 @@
 package com.hipmunk.android.tictactoe.models;
 
-import com.hipmunk.android.tictactoe.Board;
+import com.hipmunk.android.tictactoe.TicTacToeBoard;
 
 public interface IEvaluateTicTacToe {
-    int[] evaluateNextMove(Board board);
+    int[] evaluateNextMove(TicTacToeBoard board);
 }

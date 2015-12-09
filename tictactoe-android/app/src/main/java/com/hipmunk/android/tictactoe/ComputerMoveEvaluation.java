@@ -12,7 +12,7 @@ public class ComputerMoveEvaluation {
     private List<Integer[]> mAvailableMoves;
     private Random mRandom;
 
-    public ComputerMoveEvaluation(Board board, Player mover, Random random) {
+    public ComputerMoveEvaluation(TicTacToeBoard board, Player mover, Random random) {
         mRandom = random;
         mAvailableMoves = new ArrayList<>();
         for (int i = 0; i < board.getRow(); i++) {

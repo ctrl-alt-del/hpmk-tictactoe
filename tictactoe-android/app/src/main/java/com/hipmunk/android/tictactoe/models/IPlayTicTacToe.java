@@ -1,8 +1,8 @@
 package com.hipmunk.android.tictactoe.models;
 
-import com.hipmunk.android.tictactoe.Board;
+import com.hipmunk.android.tictactoe.TicTacToeBoard;
 
 public interface IPlayTicTacToe {
-    int[] move(Board board, int x, int y);
-    int[] move(Board board, int[] move);
+    int[] move(TicTacToeBoard board, int x, int y);
+    int[] move(TicTacToeBoard board, int[] move);
 }

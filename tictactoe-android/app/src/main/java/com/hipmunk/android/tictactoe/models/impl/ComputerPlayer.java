@@ -1,6 +1,6 @@
 package com.hipmunk.android.tictactoe.models.impl;
 
-import com.hipmunk.android.tictactoe.Board;
+import com.hipmunk.android.tictactoe.TicTacToeBoard;
 import com.hipmunk.android.tictactoe.ComputerMoveEvaluation;
 import com.hipmunk.android.tictactoe.models.IEvaluateTicTacToe;
 
@@ -18,7 +18,7 @@ public class ComputerPlayer extends TicTacToePlayer implements IEvaluateTicTacTo
      * logic to get the next move
      */
     @Override
-    public int[] evaluateNextMove(Board board) {
+    public int[] evaluateNextMove(TicTacToeBoard board) {
 
         /*
         * 1. check if there is a spot that makes me win

@@ -24,7 +24,7 @@ import java.util.List;
 
 public class MainActivity extends BaseActivity implements IMainView {
 
-    private Board mBoard;
+    private TicTacToeBoard mBoard;
     private ArrayAdapter<String> mAdapter;
     private List<String> mBoardRecord;
     private GridView mGridView;
@@ -141,7 +141,7 @@ public class MainActivity extends BaseActivity implements IMainView {
 
         int row = 3;
         int col = 3;
-        mBoard = new Board(row, col, mHumanPlayer, mComputerPlayer);
+        mBoard = new TicTacToeBoard(row, col, mHumanPlayer, mComputerPlayer);
 
         mGridView.setAdapter(mAdapter);
         mGridView.setEnabled(true);
