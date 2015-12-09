@@ -1,4 +1,4 @@
-package com.hipmunk.android.tictactoe;
+package com.hpmk.android.tictactoe;
 
 import org.junit.Test;
 
