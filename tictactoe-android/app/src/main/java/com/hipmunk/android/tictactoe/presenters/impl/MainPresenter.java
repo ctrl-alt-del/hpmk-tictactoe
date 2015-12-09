@@ -54,6 +54,6 @@ public class MainPresenter extends BasePresenter<IMainView> implements IMainPres
             getView().onComputerMoveFailed("");
         }
 
-        performHumanMove(board, move[0], move[1]);
+        performComputerMove(board, move[0], move[1]);
     }
 }
