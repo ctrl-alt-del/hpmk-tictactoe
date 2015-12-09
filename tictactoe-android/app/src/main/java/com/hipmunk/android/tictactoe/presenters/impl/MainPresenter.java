@@ -2,8 +2,8 @@ package com.hipmunk.android.tictactoe.presenters.impl;
 
 import android.support.annotation.NonNull;
 
-import com.hipmunk.android.tictactoe.TicTacToeBoard;
 import com.hipmunk.android.tictactoe.BoardUtils;
+import com.hipmunk.android.tictactoe.TicTacToeBoard;
 import com.hipmunk.android.tictactoe.models.impl.ComputerPlayer;
 import com.hipmunk.android.tictactoe.models.impl.HumanPlayer;
 import com.hipmunk.android.tictactoe.presenters.BasePresenter;

@@ -1,7 +1,7 @@
 package com.hipmunk.android.tictactoe.models.impl;
 
-import com.hipmunk.android.tictactoe.TicTacToeBoard;
 import com.hipmunk.android.tictactoe.ComputerMoveEvaluation;
+import com.hipmunk.android.tictactoe.TicTacToeBoard;
 import com.hipmunk.android.tictactoe.models.IEvaluateTicTacToe;
 
 import java.util.Random;

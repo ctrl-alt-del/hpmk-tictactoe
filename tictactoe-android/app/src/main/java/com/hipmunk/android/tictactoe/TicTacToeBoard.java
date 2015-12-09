@@ -2,7 +2,6 @@ package com.hipmunk.android.tictactoe;
 
 import com.hipmunk.android.tictactoe.models.impl.ComputerPlayer;
 import com.hipmunk.android.tictactoe.models.impl.HumanPlayer;
-import com.hipmunk.android.tictactoe.models.impl.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +51,7 @@ public class TicTacToeBoard extends Board {
         List<String> list = new ArrayList<>(9);
         for (int[] row : getBoard()) {
             for (int item : row) {
-                list.add(item == 0 ? "*" : String.valueOf((char) item));
+                list.add(item == 0 ? "" : String.valueOf((char) item));
             }
         }
         return list;

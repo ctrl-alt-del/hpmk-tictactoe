@@ -18,11 +18,9 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:columnWidth="0dp"
-        android:numColumns="3"
-        android:verticalSpacing="10dp"
+        android:gravity="center"
         android:horizontalSpacing="10dp"
+        android:numColumns="3"
         android:stretchMode="columnWidth"
-        android:gravity="center" />
-
-
+        android:verticalSpacing="10dp" />
 </RelativeLayout>
