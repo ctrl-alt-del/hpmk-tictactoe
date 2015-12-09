@@ -24,3 +24,9 @@ Once you build and run it, it is fully automated until it reaches either of the 
 
 
 ## Android implementation
+The Android implementation is located inside the `tictactoe-android` folder.  To run it, clone this repository, import `tictactoe-android` folder into Android Studio, and hit `Run`.
+
+The objective of the Android implementation are:
+
+1. Created a mobile app to consumed the logics and modesl built on the Java Implementation
+2. Enabled the game to be user interactive
