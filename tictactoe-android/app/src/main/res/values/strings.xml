@@ -1,7 +1,8 @@
 <resources>
-    <string name="app_name">Tictactoe</string>
+    <string name="app_name">Tic Tac Toe</string>
     <string name="action_restart">Restart Game</string>
-    <string name="winning_message">Congratulation! You won the game.</string>
-    <string name="defeated_message">Sorry, you lost the game. Try it again?</string>
-    <string name="tie_message">No winner. Try it again?</string>
+    <string name="winning_message">Congratulation! You won.</string>
+    <string name="defeated_message">Sorry, you lost. </string>
+    <string name="tie_message">No winner.</string>
+    <string name="try_again">Try again?</string>
 </resources>

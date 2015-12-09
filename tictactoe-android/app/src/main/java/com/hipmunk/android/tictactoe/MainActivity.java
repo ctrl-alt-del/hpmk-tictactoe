@@ -16,6 +16,7 @@ import com.hipmunk.android.tictactoe.models.impl.HumanPlayer;
 import com.hipmunk.android.tictactoe.models.impl.Player;
 import com.hipmunk.android.tictactoe.presenters.IMainPresenter;
 import com.hipmunk.android.tictactoe.presenters.impl.MainPresenter;
+import com.hipmunk.android.tictactoe.utils.MessageUtils;
 import com.hipmunk.android.tictactoe.views.IMainView;
 import com.hipmunk.android.tictactoe.views.impl.BaseActivity;
 
@@ -31,6 +32,12 @@ public class MainActivity extends BaseActivity implements IMainView {
     private HumanPlayer mHumanPlayer;
     private ComputerPlayer mComputerPlayer;
     private IMainPresenter mPresenter;
+    private View.OnClickListener mResetGameCallback = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            resetGame();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,15 +46,6 @@ public class MainActivity extends BaseActivity implements IMainView {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mPresenter = new MainPresenter(this);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         mBoardRecord = new ArrayList<>();
         mAdapter = new ArrayAdapter<>(this, R.layout.board_item, mBoardRecord);
@@ -83,7 +81,6 @@ public class MainActivity extends BaseActivity implements IMainView {
         switch (id) {
             case R.id.action_restart:
                 resetGame();
-                updateGridView();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -115,17 +112,15 @@ public class MainActivity extends BaseActivity implements IMainView {
     @Override
     public void onGameOverWithWinner(Player player) {
         updateGridView();
-        String message = (player instanceof HumanPlayer) ? getString(R.string.winning_message) : getString(R.string.defeated_message);
-        Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
+        int messageResId = (player instanceof HumanPlayer) ? R.string.winning_message : R.string.defeated_message;
+        MessageUtils.createSnackbar(this, messageResId, R.string.try_again, mResetGameCallback).show();
         mGridView.setEnabled(false);
     }
 
     @Override
     public void onGameOverWithoutWinner() {
         updateGridView();
-        Snackbar.make(findViewById(android.R.id.content), getString(R.string.tie_message), Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
+        MessageUtils.createSnackbar(this, R.string.tie_message, R.string.try_again, mResetGameCallback).show();
         mGridView.setEnabled(false);
     }
 
@@ -150,5 +145,6 @@ public class MainActivity extends BaseActivity implements IMainView {
     public void resetGame() {
         mBoard.reset();
         mGridView.setEnabled(true);
+        updateGridView();
     }
 }
