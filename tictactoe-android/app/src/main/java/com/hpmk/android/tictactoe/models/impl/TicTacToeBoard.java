@@ -1,8 +1,6 @@
 package com.hpmk.android.tictactoe.models.impl;
 
 import com.hpmk.android.tictactoe.models.Board;
-import com.hpmk.android.tictactoe.models.impl.ComputerPlayer;
-import com.hpmk.android.tictactoe.models.impl.HumanPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,5 +62,15 @@ public class TicTacToeBoard extends Board {
                 set(i, j, 0);
             }
         }
+    }
+
+    public boolean isCorner(int x, int y) {
+        int index = toIndex(x, y);
+        return isCorner(index);
+    }
+
+    public boolean isEdge(int x, int y) {
+        int index = toIndex(x, y);
+        return isEdge(index);
     }
 }

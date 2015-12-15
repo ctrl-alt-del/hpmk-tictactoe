@@ -15,6 +15,7 @@ import com.hpmk.android.tictactoe.models.impl.Player;
 import com.hpmk.android.tictactoe.models.impl.TicTacToeBoard;
 import com.hpmk.android.tictactoe.presenters.IMainPresenter;
 import com.hpmk.android.tictactoe.presenters.impl.MainPresenter;
+import com.hpmk.android.tictactoe.utils.BoardUtils;
 import com.hpmk.android.tictactoe.utils.MessageUtils;
 import com.hpmk.android.tictactoe.views.IMainView;
 import com.hpmk.android.tictactoe.views.impl.BaseActivity;
@@ -56,9 +57,8 @@ public class MainActivity extends BaseActivity implements IMainView {
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-                int y = position % 3;
-                int x = (position - y) / 3;
-                mPresenter.performHumanMove(mBoard, x, y);
+                int[] move = mBoard.toCoordinates(position);
+                mPresenter.performHumanMove(mBoard, move);
             }
         });
     }

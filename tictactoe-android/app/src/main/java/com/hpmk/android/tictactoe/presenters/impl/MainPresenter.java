@@ -17,6 +17,15 @@ public class MainPresenter extends BasePresenter<IMainView> implements IMainPres
     }
 
     @Override
+    public void performHumanMove(TicTacToeBoard board, int[] move) {
+        if (move.length != 2) {
+            //TODO: add error message
+        }
+
+        performHumanMove(board, move[0], move[1]);
+    }
+
+    @Override
     public void performHumanMove(@NonNull TicTacToeBoard board, int x, int y) {
         HumanPlayer humanPlayer = board.getHumanPlayer();
         int[] move = humanPlayer.move(board, x, y);
