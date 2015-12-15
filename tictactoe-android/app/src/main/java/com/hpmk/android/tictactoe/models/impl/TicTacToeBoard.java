@@ -73,4 +73,9 @@ public class TicTacToeBoard extends Board {
         int index = toIndex(x, y);
         return isEdge(index);
     }
+
+    public boolean isCenter(int x, int y) {
+        int index = toIndex(x, y);
+        return isCenter(index);
+    }
 }

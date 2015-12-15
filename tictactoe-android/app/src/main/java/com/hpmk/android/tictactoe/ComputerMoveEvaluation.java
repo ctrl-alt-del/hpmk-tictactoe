@@ -17,10 +17,25 @@ public class ComputerMoveEvaluation {
     public ComputerMoveEvaluation(TicTacToeBoard board, Player mover, Random random) {
         mRandom = random;
         mAvailableMoves = new ArrayList<>();
+        List<Integer[]> highValueMoves = new ArrayList<>();
+        List<Integer[]> mediumValueMoves = new ArrayList<>();
+        List<Integer[]> lowValueMoves = new ArrayList<>();
+
         for (int i = 0; i < board.getRow(); i++) {
             for (int j = 0; j < board.getColumn(); j++) {
                 if (board.isAvailable(i, j)) {
-                    mAvailableMoves.add(new Integer[]{i, j});
+
+                    if (board.isCenter(i, j)) {
+                        // highest value in all pending move except winning move
+                        mAvailableMoves.add(new Integer[]{i, j});
+                    } else if (board.isCorner(i, j)) {
+                        highValueMoves.add(new Integer[]{i, j});
+                    } else if (board.isEdge(i, j)) {
+                        mediumValueMoves.add(new Integer[]{i, j});
+                    } else {
+                        lowValueMoves.add(new Integer[]{i, j});
+                    }
+
                     if (BoardUtils.checkWinner(board, i, j, mover.getMarker(), false)) {
                         mWinningMove = new int[]{i, j};
                         mHasWinningMove = true;
@@ -28,6 +43,9 @@ public class ComputerMoveEvaluation {
                 }
             }
         }
+        mAvailableMoves.addAll(highValueMoves);
+        mAvailableMoves.addAll(mediumValueMoves);
+        mAvailableMoves.addAll(lowValueMoves);
     }
 
     public boolean hasWinningMove() {
@@ -42,8 +60,8 @@ public class ComputerMoveEvaluation {
         return mAvailableMoves.size() > 0;
     }
 
-    public int[] getRandomAvailableMove() {
-        Integer[] point = mAvailableMoves.get(mRandom.nextInt(mAvailableMoves.size()));
+    public int[] getMostValuedAvailableMove() {
+        Integer[] point = mAvailableMoves.get(0);
         return new int[]{point[0], point[1]};
     }
 }
